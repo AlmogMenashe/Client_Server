@@ -321,8 +321,6 @@ public class MatrixIHandler implements IHandler {
                     List<List<Index>> result = new ArrayList<>();
                     result = (ArrayList)mission2();
                     objectOutputStream.writeObject(result);
-
-
                     break;
                 }
                 case "Mission3": {

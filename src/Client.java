@@ -27,7 +27,6 @@ public class Client {
 //        };
 
 
-
         toServer.writeObject("matrix");
         // according to protocol, after "matrix" string, send 2d int array
         toServer.writeObject(source);
@@ -50,28 +49,27 @@ public class Client {
         toServer.writeObject("Mission1");
 //        toServer.writeObject(new Index(1,1));
         Collection<Index> connectedComponents = new ArrayList<>((Collection<Index>)fromServer.readObject());
-        System.out.println("Task 1 - Find all groups with index 1 (with the diagonals) : " + connectedComponents);
 
         //Task 3 - The submarine game
         toServer.writeObject("Mission3");
 //        toServer.writeObject(new Index(1,1));
         int numberOfSubs = (int)fromServer.readObject();
-        System.out.println("Task 3 - The submarine game : Number of legal Subs:" + numberOfSubs);
 
         //Task 4 - Finding extremely easy routes
         toServer.writeObject("Mission4");
 //        toServer.writeObject(new Index(1,1));
         List<List<Integer>> allPaths = new ArrayList<>((ArrayList)fromServer.readObject());
-        System.out.println("Task 4 - Finding extremely easy routes :" + allPaths);
 
         //Task 2 - Find the shortest routes from source to destination
         toServer.writeObject("Mission2");
 //        toServer.writeObject(new Index(1,1));
         List<List<Integer>> allPaths2 = new ArrayList<>((ArrayList)fromServer.readObject());
+
+
+        System.out.println("Task 1 - Find all groups with index 1 (with the diagonals) : " + connectedComponents);
         System.out.println("Task 2 - Find the shortest routes from source to destination :" + allPaths2);
-
-
-
+        System.out.println("Task 3 - The submarine game : Number of legal Subs:" + numberOfSubs);
+        System.out.println("Task 4 - Finding extremely easy routes :" + allPaths);
 
         toServer.writeObject("stop");
         fromServer.close();

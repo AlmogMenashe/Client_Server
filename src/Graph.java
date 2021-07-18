@@ -1,16 +1,10 @@
 import java.util.*;
 
 class Graph {
-
-    /**
-     * the
-     */
-
     int V;
     ArrayList<ArrayList<Integer>> adjListArray;
     HashSet<ArrayList<Integer>> components;
     List<List<Integer>> allPaths;
-
 
     // constructor
     Graph(int V) {

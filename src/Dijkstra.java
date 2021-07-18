@@ -1,5 +1,3 @@
-// Dijkstra's Algorithm in Java
-
 public class Dijkstra {
 
     public static void dijkstra(int[][] graph, int source) {
