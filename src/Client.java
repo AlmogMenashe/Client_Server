@@ -1,4 +1,3 @@
-package clientserver;
 
 import java.io.*;
 import java.net.Socket;
@@ -17,9 +16,9 @@ public class Client {
         ObjectOutputStream toServer = new ObjectOutputStream(outputStream);
 
         int[][] source = {
-                {1,1,0,0,0},
-                {1,0,0,0,0},
-                {1,1,1,1,1}
+                {1,0,0},
+                {1,0,1},
+                {0,1,1},
         };
 
         toServer.writeObject("matrix");
@@ -32,7 +31,7 @@ public class Client {
 
         toServer.writeObject("end index");
         // according to protocol, after "matrix" string, send 2d int array
-        toServer.writeObject(new Index(2,3));
+        toServer.writeObject(new Index(2,2));
 
         toServer.writeObject("TaskOne");
         toServer.writeObject(new Index(1,1));
@@ -55,10 +54,10 @@ public class Client {
         List<List<Integer>> allPaths = new ArrayList<>((ArrayList)fromServer.readObject());
         System.out.println("Mission4 results :" + allPaths);
 
-        toServer.writeObject("Mission2");
-//        toServer.writeObject(new Index(1,1));
-        List<List<Integer>> allPaths2 = new ArrayList<>((ArrayList)fromServer.readObject());
-        System.out.println("Mission2 results :" + allPaths2);
+//        toServer.writeObject("Mission2");
+////        toServer.writeObject(new Index(1,1));
+//        List<List<Integer>> allPaths2 = new ArrayList<>((ArrayList)fromServer.readObject());
+//        System.out.println("Mission2 results :" + allPaths2);
 
         toServer.writeObject("stop");
         fromServer.close();

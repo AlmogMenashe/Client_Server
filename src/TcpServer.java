@@ -1,4 +1,3 @@
-package clientserver;
 
 import java.io.IOException;
 import java.net.ServerSocket;

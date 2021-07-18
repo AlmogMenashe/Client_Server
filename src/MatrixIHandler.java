@@ -1,4 +1,3 @@
-package clientserver;
 
 import java.io.*;
 import java.sql.SQLOutput;
@@ -134,7 +133,7 @@ public class MatrixIHandler implements IHandler {
      * executing the relevant function in the class Graph
      * @return list of the connected components in the graph
      */
-    public ArrayList<HashSet<Index>> mission1(){
+    public List<HashSet<Index>> mission1(){
         HashSet<ArrayList<Index>> arr = null;
         arr = new HashSet( g.connectedComponents());
         Iterator itr = arr.iterator();
@@ -313,7 +312,7 @@ public class MatrixIHandler implements IHandler {
                     break;
                 }
                 case "Mission1": {
-                    ArrayList<HashSet<Index>> result = new ArrayList<>();
+                    List<HashSet<Index>> result = new ArrayList<>();
                     result = mission1();
                     objectOutputStream.writeObject(result);
                     break;
