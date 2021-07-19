@@ -1,13 +1,15 @@
 import java.util.*;
 
-class Graph {
+class Graph
+{
     int V;
     ArrayList<ArrayList<Integer>> adjListArray;
     HashSet<ArrayList<Integer>> components;
     List<List<Integer>> allPaths;
 
-    // constructor
-    Graph(int V) {
+    // Constructor
+    Graph(int V)
+    {
         this.V = V; // define the size of array as number of vertices
         adjListArray = new ArrayList<>();
         components = new HashSet<>();
@@ -21,9 +23,10 @@ class Graph {
     /**
      * @param src source node
      * @param dest destination node
-     * Adds an edge to an undirected graph
-     */
-    void addEdge(int src, int dest) {
+     * Adds an edge to a graph
+    **/
+    void addEdge(int src, int dest)
+    {
         adjListArray.get(src).add(dest);
     }
 
@@ -31,66 +34,74 @@ class Graph {
     /**
      * @param start the starting node
      * @param end the target of the path
-     * @return a List that represent al the paths from the start node to the end node
-     */
+     * @return a List of all the paths from the start to end node
+    **/
     public List<List<Integer>> findAllPaths(int start, int end)
     {
         boolean[] isVisited = new boolean[V];
         ArrayList<Integer> pathList = new ArrayList<>();
         pathList.add(start);
-        findAllPathsUtil(start, end, isVisited, pathList);
+        findAllPaths(start, end, isVisited, pathList);
+
         return allPaths;
     }
 
 
     /**
-     * A recursive function to find all paths from 'u' to 'd'.
-     * @param u start index
-     * @param d end index
+     * Find all paths from 'start' to 'end'.
+     * @param start start index
+     * @param end end index
      * @param isVisited keeps track of vertices in current path
-     * @param localPathList stores actual vertices in the current path
+     * @param localPathList stores vertices in the current path
      */
-    public void findAllPathsUtil(Integer u, Integer d, boolean[] isVisited, List<Integer> localPathList)
+    public void findAllPaths(Integer start, Integer end, boolean[] isVisited, List<Integer> localPathList)
     {
-        if (u.equals(d)) {
+        if (start.equals(end))
+        {
             allPaths.add(new ArrayList<>(localPathList));
-            // if match found then no need to traverse more till depth
+
+            // If match is found, stop
             return;
         }
-        isVisited[u] = true;
 
-        // Recur for all the vertices adjacent to current vertex
-            for (Integer i : adjListArray.get(u)) {
-            if (!isVisited[i]) {
-                // store current node in path[]
+        isVisited[start] = true;
+
+        for (Integer i : adjListArray.get(start))
+        {
+            if (!isVisited[i])
+            {
+                // Store current node in path
                 localPathList.add(i);
-                findAllPathsUtil(i, d, isVisited, localPathList);
+                findAllPaths(i, end, isVisited, localPathList);
 
-                // remove current node in path[]
+                // Remove current node in path
                 localPathList.remove(i);
             }
         }
-        // Mark the current node
-        isVisited[u] = false;
+
+        // Flag current node
+        isVisited[start] = false;
     }
 
     /**
      * DFS Algorithm
      * @param v current vertex
-     * @param visited checks if we visited the vertex before
-     * @param arr collects the vertexes into the component
+     * @param visited checks if we've already visited current vertex
+     * @param arr collects the vertices into the component
      */
-    void DFSUtil(int v, boolean[] visited, ArrayList<Integer> arr) {
-        // Mark the current node as visited and print it
+    void DFS(int v, boolean[] visited, ArrayList<Integer> arr)
+    {
+        // Mark current node as visited
         visited[v] = true;
         arr.add(v);
         System.out.print(v + " ");
-        // Recur for all the vertices
-        // adjacent to this vertex
-        for (int x : adjListArray.get(v)) {
+
+        for (int x : adjListArray.get(v))
+        {
             if (!visited[x])
-                DFSUtil(x, visited, arr);
+                DFS(x, visited, arr);
         }
+
         components.add(arr);
     }
 
@@ -110,19 +121,21 @@ class Graph {
     /**
      * @return a list that represents the connected components in the graph
      */
-    Collection<ArrayList<Integer>> connectedComponents() {
+    Collection<ArrayList<Integer>> connectedComponents()
+    {
         // Mark all the vertices as not visited
         boolean[] visited = new boolean[V];
-        for (int v = 0; v < V; ++v) {
-            if (!visited[v]) {
-                // finds all reachable vertices from v
+
+        for (int v = 0; v < V; ++v)
+        {
+            if (!visited[v])
+            {
+                // Find all reachable vertices from v
                 ArrayList<Integer> arr = new ArrayList<>();
-                DFSUtil(v, visited, arr);
+                DFS(v, visited, arr);
                 System.out.println();
             }
         }
         return components;
     }
-
-
 }

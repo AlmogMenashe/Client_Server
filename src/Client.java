@@ -1,75 +1,72 @@
-
 import java.io.*;
 import java.net.Socket;
 import java.util.*;
 
-public class Client {
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-        // In order to request something over TCP from a server, we need a port number and an IP address
+public class Client
+{
+    public static void main(String[] args) throws IOException, ClassNotFoundException
+    {
+        // Initialize Socket IP & Port
         Socket socket = new Socket("127.0.0.1",8010);
-        // socket is an abstraction of 2-way data pipe
+
+        // Initialize stream pipe
         InputStream inputStream = socket.getInputStream();
         OutputStream outputStream = socket.getOutputStream();
-
-        // use decorators
         ObjectInputStream fromServer = new ObjectInputStream(inputStream);
         ObjectOutputStream toServer = new ObjectOutputStream(outputStream);
 
-        int[][] source = {
+        // Input matrix
+        int[][] inputMatrix =
+        {
                 {1,0,0},
                 {1,0,1},
                 {0,1,1},
         };
-//        int[][] source = {
-//                {1,0,0,1,1},
-//                {1,0,0,1,1},
-//                {1,0,0,1,1},
-//        };
 
-
+        // If input is "matrix", the server expects a 2D Array of int
         toServer.writeObject("matrix");
-        // according to protocol, after "matrix" string, send 2d int array
-        toServer.writeObject(source);
+        toServer.writeObject(inputMatrix);
 
+        // If input is "start index", the server expects an Index
         toServer.writeObject("start index");
-        // according to protocol, after "matrix" string, send 2d int array
         toServer.writeObject(new Index(0,0));
 
+        // If input is "end index", the server expects an Index
         toServer.writeObject("end index");
-        // according to protocol, after "matrix" string, send 2d int array
         toServer.writeObject(new Index(2,2));
 
         toServer.writeObject("TaskOne");
         toServer.writeObject(new Index(1,1));
+//
+//        Collection<Index> adjacentIndices = new ArrayList<>((Collection<Index>)fromServer.readObject());
+//        System.out.println("Neighbors: " + adjacentIndices);
 
-        Collection<Index> adjacentIndices = new ArrayList<>((Collection<Index>)fromServer.readObject());
-        System.out.println("Neighbors: " + adjacentIndices);
+        /*
+            The server will execute the tasks given as input
+            For example: if the input is "task 1", the server will execute task 1
+        */
 
-        //Task 1 - Find all groups with index 1 (with the diagonals)
-        toServer.writeObject("Mission1");
-//        toServer.writeObject(new Index(1,1));
-        Collection<Index> connectedComponents = new ArrayList<>((Collection<Index>)fromServer.readObject());
+        // Task 1: Find all groups with index 1
+        toServer.writeObject("task 1");
+        Collection<Index> groupsOfOne = new ArrayList<>((Collection<Index>)fromServer.readObject());
 
-        //Task 3 - The submarine game
-        toServer.writeObject("Mission3");
-//        toServer.writeObject(new Index(1,1));
-        int numberOfSubs = (int)fromServer.readObject();
+        // Task 2: Find the shortest routes from source to destination
+        toServer.writeObject("task 2");
+        List<List<Integer>> shortestPaths = new ArrayList<>((ArrayList)fromServer.readObject());
 
-        //Task 4 - Finding extremely easy routes
-        toServer.writeObject("Mission4");
-//        toServer.writeObject(new Index(1,1));
+        // Task 3: The submarine game
+        toServer.writeObject("task 3");
+        int legalSubmarines = (int)fromServer.readObject();
+
+        // Task 4: Finding extremely easy routes
+        toServer.writeObject("task 4");
         List<List<Integer>> allPaths = new ArrayList<>((ArrayList)fromServer.readObject());
 
-        //Task 2 - Find the shortest routes from source to destination
-        toServer.writeObject("Mission2");
-//        toServer.writeObject(new Index(1,1));
-        List<List<Integer>> allPaths2 = new ArrayList<>((ArrayList)fromServer.readObject());
 
-
-        System.out.println("Task 1 - Find all groups with index 1 (with the diagonals) : " + connectedComponents);
-        System.out.println("Task 2 - Find the shortest routes from source to destination :" + allPaths2);
-        System.out.println("Task 3 - The submarine game : Number of legal Subs:" + numberOfSubs);
-        System.out.println("Task 4 - Finding extremely easy routes :" + allPaths);
+        System.out.println("Task 1: Find all groups with index 1 (with the diagonals) : " + groupsOfOne);
+        System.out.println("Task 2: Find the shortest routes from source to destination :" + shortestPaths);
+        System.out.println("Task 3: The submarine game : Number of legal Subs:" + legalSubmarines);
+        System.out.println("Task 4: Finding extremely easy routes :" + allPaths);
 
         toServer.writeObject("stop");
         fromServer.close();
