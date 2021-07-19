@@ -60,7 +60,7 @@ public class MatrixIHandler implements IHandler
 
     /**
      * Resets the input/outputStreams parameters
-     */
+    **/
     private void resetParams()
     {
         this.matrix = null;

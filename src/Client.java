@@ -41,10 +41,10 @@ public class Client
         Collection<Index> adjacentIndices = new ArrayList<>((Collection<Index>)fromServer.readObject());
         System.out.println("Neighbors: " + adjacentIndices);
 
-        /*
+        /**
             The server will execute the tasks given as input
             For example: if the input is "task 1", the server will execute task 1
-        */
+        **/
 
         // Task 1: Find all groups with index 1
         toServer.writeObject("task 1");
