@@ -283,7 +283,7 @@ public class MatrixIHandler implements IHandler
      * for each component check:
      * if there is a diagonal in one of the indices in the component
      * if the size of the component is 2 or above
-     * @param ArrayList of the connected components in the graph
+     * @param arr of the connected components in the graph
      * @return number of legal submarines in the graph
      **/
     public int submarinesGame(ArrayList<HashSet<Index>> arr){
