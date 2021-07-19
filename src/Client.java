@@ -50,22 +50,24 @@ public class Client
         toServer.writeObject("task 1");
         Collection<Index> groupsOfOne = new ArrayList<>((Collection<Index>)fromServer.readObject());
 
-        // Task 3: The submarine game
-        toServer.writeObject("task 3");
-        int legalSubmarines = (int)fromServer.readObject();
-
-        // Task 4: Finding extremely easy routes
-        toServer.writeObject("task 4");
-        List<List<Integer>> allPaths = new ArrayList<>((ArrayList)fromServer.readObject());
-
         // Task 2: Find the shortest routes from source to destination
         toServer.writeObject("task 2");
         List<List<Integer>> shortestPaths = new ArrayList<>((ArrayList)fromServer.readObject());
 
+        // Task 3: The submarine game
+        toServer.writeObject("task 3");
+        int legalSubmarines = (int)fromServer.readObject();
+
+//        // Task 4: Finding extremely easy routes
+//        toServer.writeObject("task 4");
+//        List<List<Integer>> allPaths = new ArrayList<>((ArrayList)fromServer.readObject());
+
+
+
         System.out.println("Task 1: Find all groups with index 1 (with the diagonals) : " + groupsOfOne);
         System.out.println("Task 2: Find the shortest routes from source to destination :" + shortestPaths);
         System.out.println("Task 3: The submarine game : Number of legal Subs:" + legalSubmarines);
-        System.out.println("Task 4: Finding extremely easy routes :" + allPaths);
+//        System.out.println("Task 4: Finding extremely easy routes :" + allPaths);
 
         toServer.writeObject("stop");
         fromServer.close();
