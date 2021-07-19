@@ -18,9 +18,9 @@ public class Client
         // Input matrix
         int[][] inputMatrix =
         {
-                {1,0,0},
-                {1,0,1},
-                {0,1,1},
+                {1,0,0,0,1},
+                {1,0,0,0,1},
+                {0,0,1,0,0},
         };
 
         // If input is "matrix", the server expects a 2D Array of int
@@ -35,9 +35,15 @@ public class Client
         toServer.writeObject("end index");
         toServer.writeObject(new Index(2,2));
 
+<<<<<<< Updated upstream
         toServer.writeObject("TaskOne");
         toServer.writeObject(new Index(1,1));
 //
+=======
+//        toServer.writeObject("TaskOne");
+//        toServer.writeObject(new Index(1,1));
+
+>>>>>>> Stashed changes
 //        Collection<Index> adjacentIndices = new ArrayList<>((Collection<Index>)fromServer.readObject());
 //        System.out.println("Neighbors: " + adjacentIndices);
 
@@ -59,14 +65,19 @@ public class Client
         int legalSubmarines = (int)fromServer.readObject();
 
         // Task 4: Finding extremely easy routes
+<<<<<<< Updated upstream
         toServer.writeObject("task 4");
         List<List<Integer>> allPaths = new ArrayList<>((ArrayList)fromServer.readObject());
 
+=======
+//        toServer.writeObject("task 4");
+//        List<List<Integer>> allPaths = new ArrayList<>((ArrayList)fromServer.readObject());
+>>>>>>> Stashed changes
 
         System.out.println("Task 1: Find all groups with index 1 (with the diagonals) : " + groupsOfOne);
         System.out.println("Task 2: Find the shortest routes from source to destination :" + shortestPaths);
         System.out.println("Task 3: The submarine game : Number of legal Subs:" + legalSubmarines);
-        System.out.println("Task 4: Finding extremely easy routes :" + allPaths);
+//        System.out.println("Task 4: Finding extremely easy routes :" + allPaths);
 
         toServer.writeObject("stop");
         fromServer.close();

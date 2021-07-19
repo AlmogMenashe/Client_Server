@@ -105,22 +105,28 @@ public class MatrixIHandler implements IHandler
     /**
      * runs the function "findAllPaths", and saves the result
     **/
-    public void mission4() {
-        List<List<Integer>> allPaths = null;
-        allPaths = new ArrayList(g.findAllPaths(source, target));
-        //from here translates from values to index
-        Iterator itr = allPaths.iterator();
-        allPathsSourceToTarget = new ArrayList<>();
-        while (itr.hasNext()) {
-            List<Index> help1 = new ArrayList<>();
-            List<Integer> help2;
-            help2 = (ArrayList<Integer>) itr.next();
-            Iterator itr2 = help2.iterator();
-            while (itr2.hasNext())
-                help1.add(fromValueToIndex[(Integer) itr2.next()]);
-            allPathsSourceToTarget.add((ArrayList<Index>) help1);
-        }
-    }
+//    public void mission4()
+//    {
+//        List<List<Integer>> allPaths = null;
+//        allPaths = new ArrayList(g.findAllPaths(source, target));
+//
+//        //from here translates from values to index
+//        Iterator itr = allPaths.iterator();
+//        allPathsSourceToTarget = new ArrayList<>();
+//
+//        while (itr.hasNext())
+//        {
+//            List<Index> help1 = new ArrayList<>();
+//            List<Integer> help2;
+//            help2 = (ArrayList<Integer>) itr.next();
+//            Iterator itr2 = help2.iterator();
+//
+//            while (itr2.hasNext())
+//                help1.add(fromValueToIndex[(Integer) itr2.next()]);
+//            allPathsSourceToTarget.add((ArrayList<Index>) help1);
+//        }
+//    }
+
 
     /**
      * Looping over all the paths we found at mission2, and sending ths shortest paths among them
@@ -133,6 +139,25 @@ public class MatrixIHandler implements IHandler
             System.out.println("Matrix dimensions are too big");
             ArrayList<ArrayList<Index>> result = new ArrayList<>();
             return result;
+        }
+
+        List<List<Integer>> allPaths = null;
+        allPaths = new ArrayList(g.findAllPaths(source, target));
+
+        //from here translates from values to index
+        Iterator itr = allPaths.iterator();
+        allPathsSourceToTarget = new ArrayList<>();
+
+        while (itr.hasNext())
+        {
+            List<Index> help1 = new ArrayList<>();
+            List<Integer> help2;
+            help2 = (ArrayList<Integer>) itr.next();
+            Iterator itr2 = help2.iterator();
+
+            while (itr2.hasNext())
+                help1.add(fromValueToIndex[(Integer) itr2.next()]);
+            allPathsSourceToTarget.add((ArrayList<Index>) help1);
         }
 
         ArrayList<ArrayList<Index>> shortestPathList = new ArrayList<>();
@@ -406,12 +431,12 @@ public class MatrixIHandler implements IHandler
                     objectOutputStream.writeObject(result);
                     break;
                 }
-                case "task 4":
-                {
-                    mission4();
-                    objectOutputStream.writeObject(allPathsSourceToTarget);
-                    break;
-                }
+//                case "task 4":
+//                {
+//                    mission4();
+//                    objectOutputStream.writeObject(allPathsSourceToTarget);
+//                    break;
+//                }
             }
         }
     }

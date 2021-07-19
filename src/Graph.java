@@ -53,7 +53,7 @@ class Graph
      * @param end end index
      * @param isVisited keeps track of vertices in current path
      * @param localPathList stores vertices in the current path
-     */
+    **/
     public void findAllPaths(Integer start, Integer end, boolean[] isVisited, List<Integer> localPathList)
     {
         if (start.equals(end))

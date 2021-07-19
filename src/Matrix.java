@@ -10,7 +10,8 @@ public class Matrix implements Serializable {
 
 
 
-    public Matrix(int[][] oArray){
+    public Matrix(int[][] oArray)
+    {
         primitiveMatrix = Arrays
                 .stream(oArray)
                 .map(row -> row.clone())
