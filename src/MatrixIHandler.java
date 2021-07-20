@@ -105,7 +105,7 @@ public class MatrixIHandler implements IHandler
 //    /**
 //     * runs the function "findAllPaths", and saves the result
 //    **/
-//    public void mission4() {
+//    public void easyAllPaths() {
 //        List<List<Integer>> allPaths = null;
 //        allPaths = new ArrayList(g.findAllPaths(source, target));
 //        //from here translates from values to index
@@ -421,9 +421,9 @@ public class MatrixIHandler implements IHandler
                     objectOutputStream.writeObject(result);
                     break;
                 }
-                case "task 4":
+//                case "task 4":
 //                {
-//                    mission4();
+//                    easyAllPaths();
 //                    objectOutputStream.writeObject(allPathsSourceToTarget);
 //                    break;
 //                }

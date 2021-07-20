@@ -23,6 +23,11 @@ public class Client
                 {0,1,1},
         };
 
+//        int[][] inputMatrix2 = {
+//                {100, 100, 100},
+//                {500, 900, 300}
+//        };
+
         // If input is "matrix", the server expects a 2D Array of int
         toServer.writeObject("matrix");
         toServer.writeObject(inputMatrix);
@@ -58,16 +63,20 @@ public class Client
         toServer.writeObject("task 3");
         int legalSubmarines = (int)fromServer.readObject();
 
+
+//        //Short route
+//        toServer.writeObject("matrixshortroute");
+//        toServer.writeObject(inputMatrix2);
 //        // Task 4: Finding extremely easy routes
 //        toServer.writeObject("task 4");
-//        List<List<Integer>> allPaths = new ArrayList<>((ArrayList)fromServer.readObject());
+//        List<List<Integer>> easyAllPaths = new ArrayList<>((ArrayList)fromServer.readObject());
 
 
 
         System.out.println("Task 1: Find all groups with index 1 (with the diagonals) : " + groupsOfOne);
         System.out.println("Task 2: Find the shortest routes from source to destination :" + shortestPaths);
         System.out.println("Task 3: The submarine game : Number of legal Subs:" + legalSubmarines);
-//        System.out.println("Task 4: Finding extremely easy routes :" + allPaths);
+//        System.out.println("Task 4: Finding extremely easy routes :" + easyAllPaths);
 
         toServer.writeObject("stop");
         fromServer.close();
