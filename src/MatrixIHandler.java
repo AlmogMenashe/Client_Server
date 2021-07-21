@@ -23,7 +23,7 @@ public class MatrixIHandler implements IHandler
 
     /**
      * Changes valued matrix to binary matrix (base form)
-    **/
+     **/
     public void changeNumToBinary()
     {
         for (int i = 0; i < row; i++)
@@ -60,7 +60,7 @@ public class MatrixIHandler implements IHandler
 
     /**
      * Resets the input/outputStreams parameters
-    **/
+     **/
     private void resetParams()
     {
         this.matrix = null;
@@ -73,7 +73,7 @@ public class MatrixIHandler implements IHandler
      * 0 becomes -1
      * 1 becomes a number, ordered chromatically to represent each node as a number
      * Initializes fromValueToIndex array
-    **/
+     **/
     public void updateMatrix()
     {
         int numOfVertices = 0;
@@ -102,30 +102,36 @@ public class MatrixIHandler implements IHandler
         }
     }
 
-//    /**
-//     * runs the function "findAllPaths", and saves the result
-//    **/
-//    public void easyAllPaths() {
-//        List<List<Integer>> allPaths = null;
-//        allPaths = new ArrayList(g.findAllPaths(source, target));
-//        //from here translates from values to index
-//        Iterator itr = allPaths.iterator();
-//        allPathsSourceToTarget = new ArrayList<>();
-//        while (itr.hasNext()) {
-//            List<Index> help1 = new ArrayList<>();
-//            List<Integer> help2;
-//            help2 = (ArrayList<Integer>) itr.next();
-//            Iterator itr2 = help2.iterator();
-//            while (itr2.hasNext())
-//                help1.add(fromValueToIndex[(Integer) itr2.next()]);
-//            allPathsSourceToTarget.add((ArrayList<Index>) help1);
-//        }
-//    }
+    /**
+     * Runs the function "findAllPaths", and saves the result
+     **/
+    public void mission4()
+    {
+        List<List<Integer>> allPaths = null;
+        allPaths = new ArrayList(g.findAllPaths(source, target));
+
+        // From here translates from values to index
+        Iterator itr = allPaths.iterator();
+        allPathsSourceToTarget = new ArrayList<>();
+
+        while (itr.hasNext())
+        {
+            List<Index> help1 = new ArrayList<>();
+            List<Integer> help2;
+            help2 = (ArrayList<Integer>) itr.next();
+            Iterator itr2 = help2.iterator();
+
+            while (itr2.hasNext())
+                help1.add(fromValueToIndex[(Integer) itr2.next()]);
+
+            allPathsSourceToTarget.add((ArrayList<Index>) help1);
+        }
+    }
 
     /**
      * Looping over all the paths we found at mission2, and sending ths shortest paths among them
      * @return the shortest paths between a given source index to a target
-    **/
+     **/
     public Collection<ArrayList<Index>> shortestPaths()
     {
         if(row > 50 || col > 50)
@@ -137,16 +143,35 @@ public class MatrixIHandler implements IHandler
 
         List<List<Integer>> allPaths = null;
         allPaths = new ArrayList(g.findAllPaths(source, target));
-        //from here translates from values to index
+
+        // From here translates from values to index
         Iterator itr = allPaths.iterator();
         allPathsSourceToTarget = new ArrayList<>();
-        while (itr.hasNext()) {
+
+        while (itr.hasNext())
+        {
             List<Index> help1 = new ArrayList<>();
             List<Integer> help2;
             help2 = (ArrayList<Integer>) itr.next();
             Iterator itr2 = help2.iterator();
+
             while (itr2.hasNext())
                 help1.add(fromValueToIndex[(Integer) itr2.next()]);
+
+            allPathsSourceToTarget.add((ArrayList<Index>) help1);
+        }
+
+
+        while (itr.hasNext())
+        {
+            List<Index> help1 = new ArrayList<>();
+            List<Integer> help2;
+            help2 = (ArrayList<Integer>) itr.next();
+            Iterator itr2 = help2.iterator();
+
+            while (itr2.hasNext())
+                help1.add(fromValueToIndex[(Integer) itr2.next()]);
+
             allPathsSourceToTarget.add((ArrayList<Index>) help1);
         }
 
@@ -421,12 +446,12 @@ public class MatrixIHandler implements IHandler
                     objectOutputStream.writeObject(result);
                     break;
                 }
-//                case "task 4":
-//                {
-//                    easyAllPaths();
-//                    objectOutputStream.writeObject(allPathsSourceToTarget);
-//                    break;
-//                }
+                case "task 4":
+                {
+                    mission4();
+                    objectOutputStream.writeObject(allPathsSourceToTarget);
+                    break;
+                }
             }
         }
     }
