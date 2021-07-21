@@ -10,20 +10,23 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * This class represents a multi-threaded server
  */
-public class TcpServer {
+public class TcpServer
+{
     private final int port;
     private volatile boolean stopServer;
     private ThreadPoolExecutor executor;
     private IHandler requestConcreteIHandler;
     private ReentrantLock lock = new ReentrantLock();
 
-    public TcpServer(int port) {
+    public TcpServer(int port)
+    {
         this.port = port;
         stopServer = false;
         executor = null;
     }
 
-    public void run(IHandler concreteIHandlerStrategy) {
+    public void run(IHandler concreteIHandlerStrategy)
+    {
         this.requestConcreteIHandler = concreteIHandlerStrategy;
 
         Runnable mainLogic = () -> {
@@ -33,7 +36,8 @@ public class TcpServer {
                         TimeUnit.SECONDS, new PriorityBlockingQueue<>());
                 ServerSocket server = new ServerSocket(port);
                 server.setSoTimeout(1000);
-                while (!stopServer) {
+                while (!stopServer)
+                {
                     try {
                         Socket request = server.accept(); // Wrap with a separate thread
                         System.out.println("server::client");
@@ -56,25 +60,30 @@ public class TcpServer {
                     }
                 }
                 server.close();
-            } catch (IOException e) {
+            } catch (IOException e)
+            {
                 e.printStackTrace();
             }
         };
         new Thread(mainLogic).start();
     }
 
-    public  void stop() {
+    public void stop()
+    {
         lock.lock();
-        if (!stopServer) {
+        if (!stopServer)
+        {
             stopServer = true;
-            if (executor != null) {
+            if (executor != null)
+            {
                 executor.shutdown();
             }
         }
         lock.unlock();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         TcpServer tcpServer =new TcpServer(8010);
         tcpServer.run(new MatrixIHandler());
     }

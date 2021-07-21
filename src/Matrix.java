@@ -119,7 +119,8 @@ public class Matrix implements Serializable
     {
         ArrayList<Index> filteredIndices = new ArrayList<>();
 
-        this.getAdjacentIndices2(index).stream().filter(i-> getValue(i)>-1)
+        // Get a list of all the adjacent reachable nodes (ones)
+        this.getAdjacentIndices2(index).stream().filter(i-> getValue(i) > -1)
                 .map(neighbor->filteredIndices.add(neighbor)).collect(Collectors.toList());
 
         return filteredIndices;

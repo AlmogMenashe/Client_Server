@@ -58,7 +58,7 @@ class Graph
      */
     public void findAllPaths(Integer start, Integer end, boolean[] isVisited, List<Integer> localPathList)
     {
-        // If the start node is also the end node, add a new list (holding one node) to the paths list
+        // If the start node is also the end node, add a new list to the paths list
         if (start.equals(end))
         {
             allPaths.add(new ArrayList<>(localPathList));
