@@ -119,7 +119,6 @@ public class MatrixIHandler implements IHandler
         List<List<Integer>> allPaths = null;
         allPaths = new ArrayList(g.findAllPaths(source, target));
 
-        // From here translates from values to index
         Iterator itr = allPaths.iterator();
         allPathsSourceToTarget = new ArrayList<>();
 
@@ -137,6 +136,24 @@ public class MatrixIHandler implements IHandler
         }
 
         Collection<ArrayList<Index>> lightest = new ArrayList<ArrayList<Index>>();
+        // TODO: sum the weights of each path from source to target
+        Iterator itr3 = allPathsSourceToTarget.iterator();
+        int k = 0;
+        while (itr3.hasNext())
+        {
+            Iterator itr4 = allPathsSourceToTarget.get(k).iterator();
+
+            while (itr4.hasNext())
+            {
+                itr4.next();
+            }
+
+            itr3.next();
+            k++;
+        }
+
+
+
 
         return lightest;
     }
@@ -487,17 +504,21 @@ public class MatrixIHandler implements IHandler
                     this.resetPaths();
 
                     int[][] weightsMatrix = (int[][]) objectInputStream.readObject();
-                    int wRow = weightsMatrix.length;
-                    int wCol = weightsMatrix[0].length;
+                    row = weightsMatrix.length;
+                    col = weightsMatrix[0].length;
 
                     // Initialize matrix with ones
-                    int[][] nodesMatrix = new int[wRow][wCol];
-                    for(int i = 0; i < wRow ; i++)
-                        for(int j = 0; j < wCol ; j++)
+                    int[][] nodesMatrix = new int[row][col];
+                    for(int i = 0; i < row ; i++)
+                        for(int j = 0; j < col ; j++)
                             nodesMatrix[i][j] = 1;
 
                     this.matrix = new Matrix(nodesMatrix);
                     this.matrix.printMatrix();
+//                    this.target = matrix.primitiveMatrix[end.row][end.column];
+//                    this.source = matrix.primitiveMatrix[start.row][start.column];
+                    this.target = 1;
+                    this.source = 3;
 
                     updateMatrix();
                     System.out.println("Matrix after update to Valued Matrix");
@@ -514,4 +535,5 @@ public class MatrixIHandler implements IHandler
             }
         }
     }
+
 }
