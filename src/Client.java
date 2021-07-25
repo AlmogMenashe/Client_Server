@@ -23,12 +23,18 @@ public class Client
                 {0,0,0,0},
         };
 
+        // Input weightsMatrix
         int[][] weightsMatrix =
         {
                 {100,-500,-1000},
                 {1,100,1},
                 {1,0,1}
         };
+        int[][] weightsMatrix2 =
+                {
+                        {100,100,100},
+                        {500,900,300}
+                };
 
         // If input is "matrix", the server expects a 2D Array of int
         toServer.writeObject("matrix");

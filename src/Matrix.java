@@ -115,16 +115,24 @@ public class Matrix implements Serializable
     }
 
 
-    public Collection<Index> getReachables(Index index)
+    public Collection<Index> getReachables(Index index,int type)
     {
         ArrayList<Index> filteredIndices = new ArrayList<>();
 
         // Get a list of all the adjacent reachable nodes (ones)
-        this.getAdjacentIndices2(index).stream().filter(i-> getValue(i) > -1)
-                .map(neighbor->filteredIndices.add(neighbor)).collect(Collectors.toList());
-
+        if(type==1){
+            //With Diagonals
+            this.getAdjacentIndices(index).stream().filter(i-> getValue(i) > -1)
+                    .map(neighbor->filteredIndices.add(neighbor)).collect(Collectors.toList());
+        }
+        else {
+            //No Diagonals
+            this.getAdjacentIndices2(index).stream().filter(i -> getValue(i) > -1)
+                    .map(neighbor -> filteredIndices.add(neighbor)).collect(Collectors.toList());
+        }
         return filteredIndices;
     }
+
 
 
     public static void main(String[] args)
@@ -138,7 +146,6 @@ public class Matrix implements Serializable
         Matrix matrix = new Matrix(source);
         matrix.printMatrix();
         System.out.println(matrix.getAdjacentIndices2(new Index(1,1)));
-        System.out.println(matrix.getReachables(new Index(1,1)));
         System.out.println(matrix);
     }
 }

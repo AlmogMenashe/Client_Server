@@ -44,14 +44,14 @@ public class MatrixIHandler implements IHandler
      * @param g a graph
      * @param matrix a matrix
      */
-    public void initializeAllEdges(Graph g, Matrix matrix)
+    public void initializeAllEdges(Graph g, Matrix matrix,int type)
     {
         ArrayList<Index> localAdjListArray = new ArrayList<>();
 
         // For each vertex, get its reachable nodes & add the edges to the graph
         for(int i = 0; i < v; i++)
         {
-            localAdjListArray = (ArrayList)matrix.getReachables(fromValueToIndex[i]);
+            localAdjListArray = (ArrayList)matrix.getReachables(fromValueToIndex[i],type);
 
             for(int j = 0; j < localAdjListArray.size(); j++)
             {
@@ -165,38 +165,27 @@ public class MatrixIHandler implements IHandler
         Collection<ArrayList<Index>> lightest = new ArrayList<ArrayList<Index>>();
         for (int i = 0; i < sumList.size(); i++)
         {
-            if(sumList.get(i) == min)
-                lightest.add(allPathsSourceToTarget.get(i));
+            if (sumList.get(i) == min)
+            {
+                lightest.add(reverseArrayList(allPathsSourceToTarget.get(i)));
+            }
         }
-
 
         return lightest;
     }
 
-    /**
-     * Runs the function "findAllPaths", and saves the result
-     **/
-    public void mission4()
+    //Reverse an ArrayList
+    public ArrayList<Index> reverseArrayList(ArrayList<Index> alist)
     {
-        List<List<Integer>> allPaths = null;
-        allPaths = new ArrayList(g.findAllPaths(source, target));
-
-        // From here translates from values to index
-        Iterator itr = allPaths.iterator();
-        allPathsSourceToTarget = new ArrayList<>();
-
-        while (itr.hasNext())
+        // Arraylist for storing reversed elements
+        ArrayList<Index> revArrayList = new ArrayList<Index>();
+        for (int i = alist.size() - 1; i >= 0; i--)
         {
-            List<Index> help1 = new ArrayList<>();
-            List<Integer> help2;
-            help2 = (ArrayList<Integer>) itr.next();
-            Iterator itr2 = help2.iterator();
-
-            while (itr2.hasNext())
-                help1.add(fromValueToIndex[(Integer) itr2.next()]);
-
-            allPathsSourceToTarget.add((ArrayList<Index>) help1);
+            // Append the elements in reverse order
+            revArrayList.add(alist.get(i));
         }
+        // Return the reversed arraylist
+        return revArrayList;
     }
 
     /**
@@ -452,7 +441,7 @@ public class MatrixIHandler implements IHandler
                     this.matrix.printMatrix();
 
                     g = new Graph(v);
-                    initializeAllEdges(g, matrix);
+                    initializeAllEdges(g, matrix,2);
                     System.out.println("Count: " + v);
                     break;
                 }
@@ -540,7 +529,7 @@ public class MatrixIHandler implements IHandler
                     this.matrix.printMatrix();
 
                     g = new Graph(v);
-                    initializeAllEdges(g, matrix);
+                    initializeAllEdges(g, matrix,1);
                     System.out.println("Count: " + v);
 
                     Collection<ArrayList<Index>> lightest = new ArrayList<ArrayList<Index>>(lightestPaths(weightsMatrix));
