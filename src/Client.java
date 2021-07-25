@@ -25,9 +25,9 @@ public class Client
 
         int[][] weightsMatrix =
         {
-                {1,1,1,1,1},
-                {1,1,1,1,1},
-                {1,1,1,1,1}
+                {100,-500,-1000},
+                {1,100,1},
+                {1,0,1}
         };
 
         // If input is "matrix", the server expects a 2D Array of int
