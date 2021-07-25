@@ -31,10 +31,10 @@ public class Client
                 {1,0,1}
         };
         int[][] weightsMatrix2 =
-                {
-                        {100,100,100},
-                        {500,900,300}
-                };
+        {
+                {100,100,100},
+                {500,900,300}
+        };
 
         // If input is "matrix", the server expects a 2D Array of int
         toServer.writeObject("matrix");
@@ -71,7 +71,6 @@ public class Client
         List<List<Integer>> lightestPaths = new ArrayList<>((ArrayList)fromServer.readObject());
 
 
-
         System.out.println("Task 1: Find all groups with index 1 (with the diagonals) : " + groupsOfOne);
         System.out.println("Task 2: Find the shortest routes from source to destination :" + shortestPaths);
         System.out.println("Task 3: The submarine game : Number of legal Subs:" + legalSubmarines);
@@ -82,6 +81,5 @@ public class Client
         toServer.close();
         socket.close();
         System.out.println("All streams are closed");
-
     }
 }
