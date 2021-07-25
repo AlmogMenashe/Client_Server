@@ -1,5 +1,6 @@
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class MatrixIHandler implements IHandler
@@ -122,6 +123,7 @@ public class MatrixIHandler implements IHandler
         Iterator itr = allPaths.iterator();
         allPathsSourceToTarget = new ArrayList<>();
 
+        // Get all paths from start to end node
         while (itr.hasNext())
         {
             List<Index> help1 = new ArrayList<>();
@@ -135,24 +137,37 @@ public class MatrixIHandler implements IHandler
             allPathsSourceToTarget.add((ArrayList<Index>) help1);
         }
 
-        Collection<ArrayList<Index>> lightest = new ArrayList<ArrayList<Index>>();
-        // TODO: sum the weights of each path from source to target
-        Iterator itr3 = allPathsSourceToTarget.iterator();
-        int k = 0;
-        while (itr3.hasNext())
+        // Calculate the weight of each path from start to end node
+        ArrayList<Integer> sumList = new ArrayList<Integer>();
+        for(int k = 0; k < allPathsSourceToTarget.size(); k++)
         {
-            Iterator itr4 = allPathsSourceToTarget.get(k).iterator();
+            Iterator itr3 = allPathsSourceToTarget.get(k).iterator();
+            Integer sum = 0;
 
-            while (itr4.hasNext())
+            while (itr3.hasNext())
             {
-                itr4.next();
+                Index currIndex = (Index) itr3.next();
+                sum += weightsMatrix[currIndex.row][currIndex.column];
             }
-
-            itr3.next();
-            k++;
+            sumList.add(sum);
         }
 
+        Integer min = sumList.get(0);
+        for (int i = 1; i < sumList.size(); i++)
+        {
+            if (sumList.get(i) < min)
+            {
+                min = sumList.get(i);
+            }
+        }
 
+        // Store the lightest paths in the list
+        Collection<ArrayList<Index>> lightest = new ArrayList<ArrayList<Index>>();
+        for (int i = 0; i < sumList.size(); i++)
+        {
+            if(sumList.get(i) == min)
+                lightest.add(allPathsSourceToTarget.get(i));
+        }
 
 
         return lightest;
@@ -528,8 +543,8 @@ public class MatrixIHandler implements IHandler
                     initializeAllEdges(g, matrix);
                     System.out.println("Count: " + v);
 
-                    lightestPaths(weightsMatrix);
-                    objectOutputStream.writeObject(allPathsSourceToTarget);
+                    Collection<ArrayList<Index>> lightest = new ArrayList<ArrayList<Index>>(lightestPaths(weightsMatrix));
+                    objectOutputStream.writeObject(lightest);
                     break;
                 }
             }
