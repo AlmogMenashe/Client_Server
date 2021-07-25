@@ -118,21 +118,21 @@ public class Matrix implements Serializable
     public Collection<Index> getReachables(Index index,int type)
     {
         ArrayList<Index> filteredIndices = new ArrayList<>();
-
         // Get a list of all the adjacent reachable nodes (ones)
-        if(type==1){
-            //With Diagonals
+        if(type==1)
+        {
+            // With diagonals
             this.getAdjacentIndices(index).stream().filter(i-> getValue(i) > -1)
                     .map(neighbor->filteredIndices.add(neighbor)).collect(Collectors.toList());
         }
-        else {
-            //No Diagonals
+        else
+        {
+            // Without diagonals
             this.getAdjacentIndices2(index).stream().filter(i -> getValue(i) > -1)
                     .map(neighbor -> filteredIndices.add(neighbor)).collect(Collectors.toList());
         }
         return filteredIndices;
     }
-
 
 
     public static void main(String[] args)

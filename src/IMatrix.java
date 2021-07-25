@@ -6,7 +6,8 @@ import java.util.List;
  * A Matrix represents a collection of cells in a 2D array, known as its indices.
  * Represents the common functionality required for all matrices
  */
-public interface IMatrix {
+public interface IMatrix
+{
     /**
      *
      * @param index to be queried

@@ -84,7 +84,6 @@ class Graph
                 localPathList.remove(i);
             }
         }
-
         // Flag current node as not visited
         isVisited[start] = false;
     }
@@ -108,7 +107,6 @@ class Graph
             if (!visited[x])
                 DFS(x, visited, arr);
         }
-
         // Add the current component (list) to the components hashset
         components.add(arr);
     }
@@ -131,7 +129,6 @@ class Graph
                 System.out.println();
             }
         }
-
         return components;
     }
 }

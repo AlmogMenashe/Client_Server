@@ -167,10 +167,10 @@ public class MatrixIHandler implements IHandler
         {
             if (sumList.get(i) == min)
             {
-                lightest.add(reverseArrayList(allPathsSourceToTarget.get(i)));
+                lightest.add(allPathsSourceToTarget.get(i));
+                //lightest.add(reverseArrayList(allPathsSourceToTarget.get(i)));
             }
         }
-
         return lightest;
     }
 
@@ -265,14 +265,10 @@ public class MatrixIHandler implements IHandler
             {
                 help1.add(fromValueToIndex[(Integer) itr2.next()]);
             }
-
             result.add((HashSet<Index>) help1);
-
         }
-
         return result;
     }
-
 
     /**
      * Checks whether the given index is part of a diagonal
@@ -292,7 +288,7 @@ public class MatrixIHandler implements IHandler
                 counter4 += extracted;
             }
         }
-        catch (ArrayIndexOutOfBoundsException ignored){}
+        catch (ArrayIndexOutOfBoundsException ignored) {}
 
         try
         {
@@ -380,7 +376,8 @@ public class MatrixIHandler implements IHandler
      * @param arr of the connected components in the graph
      * @return number of legal submarines in the graph
      **/
-    public int submarinesGame(ArrayList<HashSet<Index>> arr){
+    public int submarinesGame(ArrayList<HashSet<Index>> arr)
+    {
         int numOfSubs = 0;
         int count = 0;
         boolean flag = true;
@@ -408,18 +405,15 @@ public class MatrixIHandler implements IHandler
         return numOfSubs;
     }
 
-
     @Override
     public void handle(InputStream inClient, OutputStream outClient) throws Exception
     {
-
         ObjectOutputStream objectOutputStream=new ObjectOutputStream(outClient);
         ObjectInputStream objectInputStream = new ObjectInputStream(inClient);
-
         this.resetParams();
-
         boolean work = true;
-        while (work) {
+        while (work)
+        {
             switch (objectInputStream.readObject().toString())
             {
                 case "stop":
@@ -430,7 +424,6 @@ public class MatrixIHandler implements IHandler
                 case "matrix":
                 {
                     int[][] primitiveMatrix = (int[][]) objectInputStream.readObject();
-
                     this.matrix = new Matrix(primitiveMatrix);
                     this.matrix.printMatrix();
                     this.row = matrix.primitiveMatrix.length;
@@ -457,29 +450,6 @@ public class MatrixIHandler implements IHandler
                     this.target = matrix.primitiveMatrix[end.row][end.column];
                     break;
                 }
-//                case "TaskOne":
-//                {
-//                    Index indexAdjacentIndices = (Index) objectInputStream.readObject();
-//                    Collection<Index> adjacentIndices = new ArrayList<>();
-//                    if (this.matrix != null){
-//                        adjacentIndices.addAll(this.matrix.getAdjacentIndices(indexAdjacentIndices));
-//                    }
-//                    System.out.println("result: " + adjacentIndices);
-//
-//                    objectOutputStream.writeObject(adjacentIndices);
-//                    break;
-//                }
-//                case "TaskTwo":
-//                {
-//                    Index start = (Index) objectInputStream.readObject();
-//                    Collection<Index> reachables = new ArrayList<>();
-//                    if (this.matrix != null){
-//                        reachables.addAll(this.matrix.getReachables(start));
-//                    }
-//                    System.out.println("result: " + reachables);
-//                    objectOutputStream.writeObject(reachables);
-//                    break;
-//                }
                 case "task 1":
                 {
                     List<HashSet<Index>> result = new ArrayList<>();
@@ -519,10 +489,8 @@ public class MatrixIHandler implements IHandler
 
                     this.matrix = new Matrix(nodesMatrix);
                     this.matrix.printMatrix();
-//                    this.target = matrix.primitiveMatrix[end.row][end.column];
-//                    this.source = matrix.primitiveMatrix[start.row][start.column];
-                    this.target = 1;
                     this.source = 3;
+                    this.target = 5;
 
                     updateMatrix();
                     System.out.println("Matrix after update to Valued Matrix");
@@ -539,5 +507,4 @@ public class MatrixIHandler implements IHandler
             }
         }
     }
-
 }

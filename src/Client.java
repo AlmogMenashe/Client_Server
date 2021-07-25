@@ -48,12 +48,6 @@ public class Client
         toServer.writeObject("end index");
         toServer.writeObject(new Index(2,2));
 
-//        toServer.writeObject("TaskOne");
-//        toServer.writeObject(new Index(1,1));
-////
-//        Collection<Index> adjacentIndices = new ArrayList<>((Collection<Index>)fromServer.readObject());
-//        System.out.println("Neighbors: " + adjacentIndices);
-
         /**
             The server will execute the tasks given as input
             For example: if the input is "task 1", the server will execute task 1
@@ -71,14 +65,9 @@ public class Client
         toServer.writeObject("task 3");
         int legalSubmarines = (int)fromServer.readObject();
 
-
-        // If input is "matrix", the server expects a 2D Array of int
-//        toServer.writeObject("matrix");
-//        toServer.writeObject(weightsMatrix);
-
         // Task 4: Find the lightest route from source to destination
         toServer.writeObject("task 4");
-        toServer.writeObject(weightsMatrix);
+        toServer.writeObject(weightsMatrix2);
         List<List<Integer>> lightestPaths = new ArrayList<>((ArrayList)fromServer.readObject());
 
 

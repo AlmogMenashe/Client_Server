@@ -6,18 +6,21 @@ public class Index implements Serializable {
     int row, column;
 
     // Constructor
-    public Index(int oRow, int oColumn){
+    public Index(int oRow, int oColumn)
+    {
         this.row = oRow;
         this.column = oColumn;
     }
 
     @Override
-    public String toString(){
+    public String toString()
+    {
         return "(" + row + "," + column + ")";
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object o)
+    {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Index index = (Index) o;
@@ -26,20 +29,24 @@ public class Index implements Serializable {
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         return Objects.hash(row, column);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         Index myIndex = new Index(2,2);
         System.out.println(myIndex);
     }
 
-    public int getColumn() {
+    public int getColumn()
+    {
         return column;
     }
 
-    public int getRow() {
+    public int getRow()
+    {
         return row;
     }
 }
