@@ -114,20 +114,25 @@ public class Matrix implements Serializable
         return primitiveMatrix[index.row][index.column];
     }
 
-
+    /**
+     *
+     * @param index
+     * @param type if type == 1 Without diagonals else With diagonals
+     * @return ArrayList with reachable indices
+     */
     public Collection<Index> getReachables(Index index,int type)
     {
         ArrayList<Index> filteredIndices = new ArrayList<>();
         // Get a list of all the adjacent reachable nodes (ones)
         if(type==1)
         {
-            // With diagonals
+            // Without diagonals
             this.getAdjacentIndices(index).stream().filter(i-> getValue(i) > -1)
                     .map(neighbor->filteredIndices.add(neighbor)).collect(Collectors.toList());
         }
         else
         {
-            // Without diagonals
+            // With diagonals
             this.getAdjacentIndices2(index).stream().filter(i -> getValue(i) > -1)
                     .map(neighbor -> filteredIndices.add(neighbor)).collect(Collectors.toList());
         }

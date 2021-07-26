@@ -18,10 +18,16 @@ public class Client
         // Input matrix
         int[][] inputMatrix =
         {
-                {1,0,0,1},
-                {1,0,1,0},
-                {0,0,0,0},
+                {1,0,0},
+                {1,0,1},
+                {0,1,1}
         };
+        int[][] inputMatrix2 =
+            {
+                    {1,0,0,1,1},
+                    {1,0,0,1,1},
+                    {1,0,0,1,1}
+            };
 
         // Input weightsMatrix
         int[][] weightsMatrix =
