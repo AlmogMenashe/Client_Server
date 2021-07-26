@@ -117,7 +117,7 @@ public class Matrix implements Serializable
     /**
      *
      * @param index
-     * @param type if type == 1 Without diagonals else With diagonals
+     * @param type if type = 1 without diagonals, else With diagonals
      * @return ArrayList with reachable indices
      */
     public Collection<Index> getReachables(Index index,int type)

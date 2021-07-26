@@ -44,10 +44,12 @@ public class TcpServer
                                 System.out.println("server::handle");
                                 requestConcreteIHandler.handle(request.getInputStream(),
                                         request.getOutputStream());
+
                                 // Close all streams
                                 request.getInputStream().close();
                                 request.getOutputStream().close();
                                 request.close();
+
                             } catch (Exception e) {
                                 System.out.println("server::"+e.getMessage());
                                 System.err.println(e.getMessage());
@@ -82,7 +84,7 @@ public class TcpServer
 
     public static void main(String[] args)
     {
-        TcpServer tcpServer =new TcpServer(8010);
+        TcpServer tcpServer = new TcpServer(8010);
         tcpServer.run(new MatrixIHandler());
     }
 }

@@ -6,14 +6,14 @@ public class MatrixIHandler implements IHandler
 {
     // Data Members
     private Matrix matrix;
-    private Index start, end; // Start & End index
+    private Index start, end; // Start & end index
     private int row, col;
-    int source, target; // Start & End index values
+    int source, destination; // Start & end nodes
     Graph g;
     int v; // Number of graph nodes
-    private ArrayList<ArrayList<Integer>> adjListArray;
-    private Index[] fromValueToIndex; // Index of each value
-    ArrayList<ArrayList<Index>> allPathsSourceToTarget;
+    private ArrayList<ArrayList<Integer>> adjacentNodesArrayList;
+    private Index[] fromNodeToIndex; // Index of each value
+    ArrayList<ArrayList<Index>> allPossiblePathsFromSourceToTarget;
 
     // Constructor
     public MatrixIHandler()
@@ -50,7 +50,7 @@ public class MatrixIHandler implements IHandler
         // For each vertex, get its reachable nodes & add the edges to the graph
         for(int i = 0; i < v; i++)
         {
-            localAdjListArray = (ArrayList)matrix.getReachables(fromValueToIndex[i],type);
+            localAdjListArray = (ArrayList)matrix.getReachables(fromNodeToIndex[i],type);
 
             for(int j = 0; j < localAdjListArray.size(); j++)
             {
@@ -65,9 +65,9 @@ public class MatrixIHandler implements IHandler
     private void resetPaths()
     {
         this.matrix = null;
-        this.allPathsSourceToTarget = null;
-        this.fromValueToIndex = null;
-        this.adjListArray = null;
+        this.allPossiblePathsFromSourceToTarget = null;
+        this.fromNodeToIndex = null;
+        this.adjacentNodesArrayList = null;
     }
 
     /**
@@ -83,8 +83,8 @@ public class MatrixIHandler implements IHandler
     /**
      * Changes the matrix from Binary to Value
      * 0 becomes -1
-     * 1 becomes a number, ordered chromatically to represent each node as a number
-     * Initializes fromValueToIndex array
+     * 1 becomes a number, ordered chromatically to represent each node as a number, starting from 0
+     * Initializes fromNodeToIndex array
      **/
     public void updateMatrix()
     {
@@ -102,14 +102,14 @@ public class MatrixIHandler implements IHandler
         }
 
         this.v = numOfVertices;
-        this.fromValueToIndex = new Index[v];
+        this.fromNodeToIndex = new Index[v];
 
         for (int i = 0; i < row; i++)
         {
             for (int j = 0; j < col; j++)
             {
                 if(matrix.primitiveMatrix[i][j] != -1)
-                    fromValueToIndex[matrix.primitiveMatrix[i][j]] = new Index(i, j);
+                    fromNodeToIndex[matrix.primitiveMatrix[i][j]] = new Index(i, j);
             }
         }
     }
@@ -117,10 +117,10 @@ public class MatrixIHandler implements IHandler
     public Collection<ArrayList<Index>> lightestPaths(int[][] weightsMatrix)
     {
         List<List<Integer>> allPaths = null;
-        allPaths = new ArrayList(g.findAllPaths(source, target));
+        allPaths = new ArrayList(g.findAllPaths(source, destination));
 
         Iterator itr = allPaths.iterator();
-        allPathsSourceToTarget = new ArrayList<>();
+        allPossiblePathsFromSourceToTarget = new ArrayList<>();
 
         // Get all paths from start to end node
         while (itr.hasNext())
@@ -131,16 +131,16 @@ public class MatrixIHandler implements IHandler
             Iterator itr2 = help2.iterator();
 
             while (itr2.hasNext())
-                help1.add(fromValueToIndex[(Integer) itr2.next()]);
+                help1.add(fromNodeToIndex[(Integer) itr2.next()]);
 
-            allPathsSourceToTarget.add((ArrayList<Index>) help1);
+            allPossiblePathsFromSourceToTarget.add((ArrayList<Index>) help1);
         }
 
         // Calculate the weight of each path from start to end node
         ArrayList<Integer> sumList = new ArrayList<Integer>();
-        for(int k = 0; k < allPathsSourceToTarget.size(); k++)
+        for(int k = 0; k < allPossiblePathsFromSourceToTarget.size(); k++)
         {
-            Iterator itr3 = allPathsSourceToTarget.get(k).iterator();
+            Iterator itr3 = allPossiblePathsFromSourceToTarget.get(k).iterator();
             Integer sum = 0;
 
             while (itr3.hasNext())
@@ -151,6 +151,7 @@ public class MatrixIHandler implements IHandler
             sumList.add(sum);
         }
 
+        // Find the minimum weight value
         Integer min = sumList.get(0);
         for (int i = 1; i < sumList.size(); i++)
         {
@@ -166,8 +167,7 @@ public class MatrixIHandler implements IHandler
         {
             if (sumList.get(i) == min)
             {
-                lightest.add(allPathsSourceToTarget.get(i));
-                //lightest.add(reverseArrayList(allPathsSourceToTarget.get(i)));
+                lightest.add(allPossiblePathsFromSourceToTarget.get(i));
             }
         }
         return lightest;
@@ -202,10 +202,10 @@ public class MatrixIHandler implements IHandler
 
         // Find all possible paths from start to end
         List<List<Integer>> allPaths = null;
-        allPaths = new ArrayList(g.findAllPaths(source, target));
+        allPaths = new ArrayList(g.findAllPaths(source, destination));
 
         Iterator itr = allPaths.iterator();
-        allPathsSourceToTarget = new ArrayList<>();
+        allPossiblePathsFromSourceToTarget = new ArrayList<>();
 
         while (itr.hasNext())
         {
@@ -216,27 +216,27 @@ public class MatrixIHandler implements IHandler
             Iterator itr2 = help2.iterator();
 
             while (itr2.hasNext())
-                help1.add(fromValueToIndex[(Integer) itr2.next()]);
+                help1.add(fromNodeToIndex[(Integer) itr2.next()]);
 
-            allPathsSourceToTarget.add((ArrayList<Index>) help1);
+            allPossiblePathsFromSourceToTarget.add((ArrayList<Index>) help1);
         }
 
         // Find & return the shortest paths (can be more than one)
         ArrayList<ArrayList<Index>> shortestPathList = new ArrayList<>();
         int min = -1;
 
-        for(int i=0; i< allPathsSourceToTarget.size(); i++)
+        for(int i = 0; i< allPossiblePathsFromSourceToTarget.size(); i++)
         {
-            if(min == -1 || allPathsSourceToTarget.get(i).size()<min)
-                min = allPathsSourceToTarget.get(i).size();
+            if(min == -1 || allPossiblePathsFromSourceToTarget.get(i).size()<min)
+                min = allPossiblePathsFromSourceToTarget.get(i).size();
         }
 
-        System.out.println("allPaths: " + allPathsSourceToTarget);
+        System.out.println("allPaths: " + allPossiblePathsFromSourceToTarget);
 
-        for(int i=0; i< allPathsSourceToTarget.size(); i++)
+        for(int i = 0; i< allPossiblePathsFromSourceToTarget.size(); i++)
         {
-            if(allPathsSourceToTarget.get(i).size() == min)
-                shortestPathList.add(new ArrayList(allPathsSourceToTarget.get(i)));
+            if(allPossiblePathsFromSourceToTarget.get(i).size() == min)
+                shortestPathList.add(new ArrayList(allPossiblePathsFromSourceToTarget.get(i)));
         }
 
         return shortestPathList;
@@ -262,7 +262,7 @@ public class MatrixIHandler implements IHandler
 
             while (itr2.hasNext())
             {
-                help1.add(fromValueToIndex[(Integer) itr2.next()]);
+                help1.add(fromNodeToIndex[(Integer) itr2.next()]);
             }
             result.add((HashSet<Index>) help1);
         }
@@ -411,6 +411,7 @@ public class MatrixIHandler implements IHandler
         ObjectInputStream objectInputStream = new ObjectInputStream(inClient);
         this.resetParams();
         boolean work = true;
+
         while (work)
         {
             switch (objectInputStream.readObject().toString())
@@ -434,7 +435,7 @@ public class MatrixIHandler implements IHandler
 
                     g = new Graph(v);
                     initializeAllEdges(g, matrix,2);
-                    System.out.println("Count: " + v);
+                    System.out.println("Num of vertices in the graph: " + v);
                     break;
                 }
                 case "start index":
@@ -446,7 +447,7 @@ public class MatrixIHandler implements IHandler
                 case "end index":
                 {
                     this.end = (Index) objectInputStream.readObject();
-                    this.target = matrix.primitiveMatrix[end.row][end.column];
+                    this.destination = matrix.primitiveMatrix[end.row][end.column];
                     break;
                 }
                 case "task 1":
@@ -488,16 +489,17 @@ public class MatrixIHandler implements IHandler
 
                     this.matrix = new Matrix(nodesMatrix);
                     this.matrix.printMatrix();
-                    this.source = 3;
-                    this.target = 5;
 
                     updateMatrix();
                     System.out.println("Matrix after update to Valued Matrix");
                     this.matrix.printMatrix();
 
+                    this.source = 3;
+                    this.destination = 5;
+
                     g = new Graph(v);
                     initializeAllEdges(g, matrix,1);
-                    System.out.println("Count: " + v);
+                    System.out.println("Num of vertices in the graph: " + v);
 
                     Collection<ArrayList<Index>> lightest = new ArrayList<ArrayList<Index>>(lightestPaths(weightsMatrix));
                     objectOutputStream.writeObject(lightest);
